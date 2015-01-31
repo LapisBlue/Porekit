@@ -52,7 +52,8 @@ public class HandlerList {
                     for (List<RegisteredListener> list : h.handlerslots.values()) {
                         list.clear();
                     }
-                    h.handlers = null;
+                    h.reset();
+                    h.removeAll();
                 }
             }
         }
@@ -107,7 +108,8 @@ public class HandlerList {
     public synchronized void register(RegisteredListener listener) {
         if (handlerslots.get(listener.getPriority()).contains(listener))
             throw new IllegalStateException("This listener is already registered to priority " + listener.getPriority().toString());
-        handlers = null;
+        reset();
+        add(listener);
         handlerslots.get(listener.getPriority()).add(listener);
     }
 
@@ -129,7 +131,8 @@ public class HandlerList {
      */
     public synchronized void unregister(RegisteredListener listener) {
         if (handlerslots.get(listener.getPriority()).remove(listener)) {
-            handlers = null;
+            reset();
+            remove(listener);
         }
     }
 
@@ -142,13 +145,15 @@ public class HandlerList {
         boolean changed = false;
         for (List<RegisteredListener> list : handlerslots.values()) {
             for (ListIterator<RegisteredListener> i = list.listIterator(); i.hasNext();) {
-                if (i.next().getPlugin().equals(plugin)) {
+                RegisteredListener handler = i.next();
+                if (handler.getPlugin().equals(plugin)) {
                     i.remove();
+                    remove(handler);
                     changed = true;
                 }
             }
         }
-        if (changed) handlers = null;
+        if (changed) reset();
     }
 
     /**
@@ -160,13 +165,15 @@ public class HandlerList {
         boolean changed = false;
         for (List<RegisteredListener> list : handlerslots.values()) {
             for (ListIterator<RegisteredListener> i = list.listIterator(); i.hasNext();) {
-                if (i.next().getListener().equals(listener)) {
+                RegisteredListener handler = i.next();
+                if (handler.getListener().equals(listener)) {
                     i.remove();
+                    remove(handler);
                     changed = true;
                 }
             }
         }
-        if (changed) handlers = null;
+        if (changed) reset();
     }
 
     /**
@@ -175,8 +182,10 @@ public class HandlerList {
     public synchronized void bake() {
         if (handlers != null) return; // don't re-bake when still valid
         List<RegisteredListener> entries = new ArrayList<RegisteredListener>();
+        handlersByPriority = new EnumMap<EventPriority, RegisteredListener[]>(EventPriority.class);
         for (Entry<EventPriority, ArrayList<RegisteredListener>> entry : handlerslots.entrySet()) {
             entries.addAll(entry.getValue());
+            handlersByPriority.put(entry.getKey(), entry.getValue().toArray(new RegisteredListener[entry.getValue().size()]));
         }
         handlers = entries.toArray(new RegisteredListener[entries.size()]);
     }
@@ -227,5 +236,62 @@ public class HandlerList {
         synchronized (allLists) {
             return (ArrayList<HandlerList>) allLists.clone();
         }
+    }
+
+
+    private EnumMap<EventPriority, RegisteredListener[]> handlersByPriority;
+
+    public RegisteredListener[] getRegisteredListeners(EventPriority priority) {
+        while (handlers == null) bake(); // This prevents fringe cases of returning null
+        return handlersByPriority.get(priority);
+    }
+
+    private void reset() {
+        handlers = null;
+        handlersByPriority = null;
+    }
+
+    private List<Adapter> adapter = new ArrayList<Adapter>();
+
+    public void addAdapter(Adapter adapter) {
+        this.adapter.add(adapter);
+    }
+
+    private boolean hasRegistrations(EventPriority priority) {
+        ArrayList<RegisteredListener> registered = handlerslots.get(priority);
+        return registered.size() > 0;
+    }
+
+    private void add(RegisteredListener listener) {
+        if (!adapter.isEmpty()) {
+            EventPriority priority = listener.getPriority();
+            if (!hasRegistrations(priority)) {
+                for (Adapter adapter : this.adapter)
+                    adapter.register(priority);
+            }
+        }
+    }
+
+    private void remove(RegisteredListener listener) {
+        if (!adapter.isEmpty()) {
+            EventPriority priority = listener.getPriority();
+            if (!hasRegistrations(priority)) {
+                for (Adapter adapter : this.adapter)
+                    adapter.unregister(priority);
+            }
+        }
+    }
+
+    private void removeAll() {
+        if (!adapter.isEmpty()) {
+            for (Adapter adapter : this.adapter)
+                adapter.unregister();
+        }
+    }
+
+    public interface Adapter {
+        void register(EventPriority priority);
+        void unregister();
+        void unregister(EventPriority priority);
     }
 }

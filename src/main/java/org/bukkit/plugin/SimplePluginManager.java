@@ -562,7 +562,7 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
-    private HandlerList getEventListeners(Class<? extends Event> type) {
+    public static HandlerList getEventListeners(Class<? extends Event> type) {
         try {
             Method method = getRegistrationClass(type).getDeclaredMethod("getHandlerList");
             method.setAccessible(true);
@@ -572,7 +572,7 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
-    private Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz) {
+    private static Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz) {
         try {
             clazz.getDeclaredMethod("getHandlerList");
             return clazz;
