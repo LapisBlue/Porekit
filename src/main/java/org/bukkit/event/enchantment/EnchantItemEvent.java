@@ -32,7 +32,7 @@ public class EnchantItemEvent extends InventoryEvent implements Cancellable {
         this.table = table;
         this.item = item;
         this.level = level;
-        this.enchants = new HashMap<Enchantment, Integer>(enchants);
+        this.enchants = isPoreEvent() ? null : new HashMap<Enchantment, Integer>(enchants);
         this.cancelled = false;
         this.button = i;
     }

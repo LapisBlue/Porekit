@@ -95,4 +95,8 @@ public abstract class Event {
          */
         ALLOW;
     }
+
+    protected final boolean isPoreEvent() {
+        return getClass().getName().startsWith("blue.lapis.pore.impl.event."); // TODO: Keep up to date
+    }
 }

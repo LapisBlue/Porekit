@@ -9,7 +9,7 @@ public abstract class ChunkEvent extends WorldEvent {
     protected Chunk chunk;
 
     protected ChunkEvent(final Chunk chunk) {
-        super(chunk.getWorld());
+        super(chunk);
         this.chunk = chunk;
     }
 
