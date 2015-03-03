@@ -13,6 +13,14 @@ public abstract class WorldEvent extends Event {
         this.world = world;
     }
 
+    protected WorldEvent(final org.bukkit.Chunk chunk) {
+        this.world = isPoreEvent() ? null : chunk.getWorld();
+    }
+
+    protected WorldEvent(final org.bukkit.Location location) {
+        this.world = isPoreEvent() ? null : location.getWorld();
+    }
+
     /**
      * Gets the world primarily involved with this event
      *

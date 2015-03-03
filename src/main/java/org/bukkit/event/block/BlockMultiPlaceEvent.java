@@ -19,8 +19,14 @@ public class BlockMultiPlaceEvent extends BlockPlaceEvent {
     private final List<BlockState> states;
 
     public BlockMultiPlaceEvent(List<BlockState> states, Block clicked, ItemStack itemInHand, Player thePlayer, boolean canBuild) {
-        super(states.get(0).getBlock(), states.get(0), clicked, itemInHand, thePlayer, canBuild);
-        this.states = ImmutableList.copyOf(states);
+        super(null, null, clicked, itemInHand, thePlayer, canBuild);
+        if (isPoreEvent()) {
+            this.states = null;
+        } else {
+            this.block = states.get(0).getBlock();
+            this.replacedBlockState = states.get(0);
+            this.states = ImmutableList.copyOf(states);
+        }
     }
 
     /**

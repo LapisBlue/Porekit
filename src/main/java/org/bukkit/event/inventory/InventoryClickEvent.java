@@ -62,7 +62,11 @@ public class InventoryClickEvent extends InventoryInteractEvent {
         super(view);
         this.slot_type = type;
         this.rawSlot = slot;
-        this.whichSlot = view.convertSlot(slot);
+        if (isPoreEvent()) {
+            this.whichSlot = -1;
+        } else {
+            this.whichSlot = view.convertSlot(slot);
+        }
         this.click = click;
         this.action = action;
     }

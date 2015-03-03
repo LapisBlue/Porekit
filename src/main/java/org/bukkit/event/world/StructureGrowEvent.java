@@ -22,7 +22,7 @@ public class StructureGrowEvent extends WorldEvent implements Cancellable {
     private final List<BlockState> blocks;
 
     public StructureGrowEvent(final Location location, final TreeType species, final boolean bonemeal, final Player player, final List<BlockState> blocks) {
-        super(location.getWorld());
+        super(location);
         this.location = location;
         this.species = species;
         this.bonemeal = bonemeal;
