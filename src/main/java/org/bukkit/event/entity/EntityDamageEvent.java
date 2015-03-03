@@ -141,7 +141,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      *
      * @return the amount of damage caused by the event
      */
-    public final double getFinalDamage() {
+    public double getFinalDamage() {
         double damage = 0;
         for (DamageModifier modifier : MODIFIERS) {
             damage += getDamage(modifier);

@@ -18,7 +18,7 @@ public abstract class VehicleEvent extends Event {
      *
      * @return the vehicle
      */
-    public final Vehicle getVehicle() {
+    public Vehicle getVehicle() {
         return vehicle;
     }
 }

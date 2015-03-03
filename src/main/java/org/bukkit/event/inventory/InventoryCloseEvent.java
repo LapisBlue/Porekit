@@ -20,7 +20,7 @@ public class InventoryCloseEvent extends InventoryEvent {
      *
      * @return Player who is involved in this event
      */
-    public final HumanEntity getPlayer() {
+    public HumanEntity getPlayer() {
         return transaction.getPlayer();
     }
 

@@ -45,7 +45,7 @@ public class PlayerLeashEntityEvent extends Event implements Cancellable {
      *
      * @return Player who is involved in this event
      */
-    public final Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
