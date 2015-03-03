@@ -18,7 +18,7 @@ public abstract class BlockEvent extends Event {
      *
      * @return The Block which block is involved in this event
      */
-    public final Block getBlock() {
+    public Block getBlock() {
         return block;
     }
 }

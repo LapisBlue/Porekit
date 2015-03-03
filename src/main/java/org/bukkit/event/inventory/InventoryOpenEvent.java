@@ -22,7 +22,7 @@ public class InventoryOpenEvent extends InventoryEvent implements Cancellable {
      *
      * @return Player who is involved in this event
      */
-    public final HumanEntity getPlayer() {
+    public HumanEntity getPlayer() {
         return transaction.getPlayer();
     }
 

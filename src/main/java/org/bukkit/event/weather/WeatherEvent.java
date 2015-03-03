@@ -18,7 +18,7 @@ public abstract class WeatherEvent extends Event {
      *
      * @return World this event is occurring in
      */
-    public final World getWorld() {
+    public World getWorld() {
         return world;
     }
 }

@@ -16,7 +16,7 @@ public abstract class PlayerChannelEvent extends PlayerEvent {
         this.channel = channel;
     }
 
-    public final String getChannel() {
+    public String getChannel() {
         return channel;
     }
 
