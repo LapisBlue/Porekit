@@ -181,6 +181,8 @@ public enum EntityType {
 
     private static final Map<String, EntityType> NAME_MAP = new HashMap<String, EntityType>();
     private static final Map<Short, EntityType> ID_MAP = new HashMap<Short, EntityType>();
+    private static final Map<Class<? extends Entity>, EntityType> CLASS_MAP =
+            new HashMap<Class<? extends Entity>, EntityType>();
 
     static {
         for (EntityType type : values()) {
@@ -190,7 +192,13 @@ public enum EntityType {
             if (type.typeId > 0) {
                 ID_MAP.put(type.typeId, type);
             }
+            if (type.clazz != null) {
+                CLASS_MAP.put(type.clazz, type);
+            }
         }
+
+        // Alias Fireball.class as FIREBALL so we don't return null
+        CLASS_MAP.put(Fireball.class, EntityType.FIREBALL);
     }
 
     private EntityType(String name, Class<? extends Entity> clazz, int typeId) {
@@ -257,6 +265,10 @@ public enum EntityType {
             return null;
         }
         return ID_MAP.get((short) id);
+    }
+
+    public static EntityType fromClass(Class<? extends Entity> clazz) {
+        return CLASS_MAP.get(clazz);
     }
 
     /**
