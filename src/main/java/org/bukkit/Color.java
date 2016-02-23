@@ -106,6 +106,17 @@ public final class Color implements ConfigurationSerializable {
     private final byte green;
     private final byte blue;
 
+
+    private Color(int red, int green, int blue) {
+        Validate.isTrue(red >= 0 && red <= BIT_MASK, "Red is not between 0-255: ", red);
+        Validate.isTrue(green >= 0 && green <= BIT_MASK, "Green is not between 0-255: ", green);
+        Validate.isTrue(blue >= 0 && blue <= BIT_MASK, "Blue is not between 0-255: ", blue);
+
+        this.red = (byte) red;
+        this.green = (byte) green;
+        this.blue = (byte) blue;
+    }
+
     /**
      * Creates a new Color object from a red, green, and blue
      *
@@ -158,16 +169,6 @@ public final class Color implements ConfigurationSerializable {
     public static Color fromBGR(int bgr) throws IllegalArgumentException {
         Validate.isTrue((bgr >> 24) == 0, "Extrenuous data in: ", bgr);
         return fromBGR(bgr >> 16 & BIT_MASK, bgr >> 8 & BIT_MASK, bgr >> 0 & BIT_MASK);
-    }
-
-    private Color(int red, int green, int blue) {
-        Validate.isTrue(red >= 0 && red <= BIT_MASK, "Red is not between 0-255: ", red);
-        Validate.isTrue(green >= 0 && green <= BIT_MASK, "Green is not between 0-255: ", green);
-        Validate.isTrue(blue >= 0 && blue <= BIT_MASK, "Blue is not between 0-255: ", blue);
-
-        this.red = (byte) red;
-        this.green = (byte) green;
-        this.blue = (byte) blue;
     }
 
     /**
