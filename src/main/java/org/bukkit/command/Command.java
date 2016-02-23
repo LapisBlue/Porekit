@@ -271,7 +271,7 @@ public abstract class Command {
     }
 
     private boolean allowChangesFrom(CommandMap commandMap) {
-        return (null == this.commandMap || this.commandMap == commandMap);
+        return null == this.commandMap || this.commandMap == commandMap;
     }
 
     /**
@@ -280,7 +280,7 @@ public abstract class Command {
      * @return true if this command is currently registered false otherwise
      */
     public boolean isRegistered() {
-        return (null != this.commandMap);
+        return null != this.commandMap;
     }
 
     /**

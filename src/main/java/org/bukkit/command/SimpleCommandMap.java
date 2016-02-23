@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 public class SimpleCommandMap implements CommandMap {
+    private static final String BUKKIT = "bukkit";
     private static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
     protected final Map<String, Command> knownCommands = new HashMap<String, Command>();
     private final Server server;
@@ -28,14 +29,13 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     private void setDefaultCommands() {
-        register("bukkit", new VersionCommand("version"));
-        //register("bukkit", new ReloadCommand("reload"));
-        register("bukkit", new PluginsCommand("plugins"));
-        register("bukkit", new TimingsCommand("timings"));
+        register(BUKKIT, new VersionCommand("version"));
+        register(BUKKIT, new PluginsCommand("plugins"));
+        register(BUKKIT, new TimingsCommand("timings"));
     }
 
     public void setFallbackCommands() {
-        register("bukkit", new HelpCommand());
+        register(BUKKIT, new HelpCommand());
     }
 
     /**
@@ -171,7 +171,7 @@ public class SimpleCommandMap implements CommandMap {
             ArrayList<String> completions = new ArrayList<String>();
             Map<String, Command> knownCommands = this.knownCommands;
 
-            final String prefix = (sender instanceof Player ? "/" : "");
+            final String prefix = sender instanceof Player ? "/" : "";
 
             for (Map.Entry<String, Command> commandEntry : knownCommands.entrySet()) {
                 Command command = commandEntry.getValue();
