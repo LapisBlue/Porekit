@@ -10,13 +10,15 @@ import java.util.List;
  * into an array of strings appropriate for displaying on the Minecraft player
  * console.
  */
-public class ChatPaginator {
+public final class ChatPaginator {
     public static final int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = 55; // Will never wrap, even with the largest characters
     public static final int AVERAGE_CHAT_PAGE_WIDTH = 65; // Will typically not wrap using an average character distribution
     public static final int UNBOUNDED_PAGE_WIDTH = Integer.MAX_VALUE;
     public static final int OPEN_CHAT_PAGE_HEIGHT = 20; // The height of an expanded chat window
     public static final int CLOSED_CHAT_PAGE_HEIGHT = 10; // The height of the default chat window
     public static final int UNBOUNDED_PAGE_HEIGHT = Integer.MAX_VALUE;
+
+    private ChatPaginator() {}
 
     /**
      * Breaks a raw string up into pages using the default width and height.

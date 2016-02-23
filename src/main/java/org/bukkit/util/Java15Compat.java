@@ -2,7 +2,10 @@ package org.bukkit.util;
 
 import java.lang.reflect.Array;
 
-public class Java15Compat {
+public final class Java15Compat {
+
+    private Java15Compat() {}
+
     @SuppressWarnings("unchecked")
     public static <T> T[] Arrays_copyOfRange(T[] original, int start, int end) {
         if (original.length >= start && 0 <= start) {

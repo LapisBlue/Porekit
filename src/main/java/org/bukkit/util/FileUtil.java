@@ -9,7 +9,9 @@ import java.io.IOException;
 /**
  * Class containing file utilities
  */
-public class FileUtil {
+public final class FileUtil {
+
+    private FileUtil() {}
 
     /**
      * This method copies one file to another location

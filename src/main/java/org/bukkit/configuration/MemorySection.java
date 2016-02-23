@@ -150,10 +150,8 @@ public class MemorySection implements ConfigurationSection {
         Configuration root = getRoot();
         Configuration defaults = root == null ? null : root.getDefaults();
 
-        if (defaults != null) {
-            if (defaults.isConfigurationSection(getCurrentPath())) {
-                return defaults.getConfigurationSection(getCurrentPath());
-            }
+        if (defaults != null && defaults.isConfigurationSection(getCurrentPath())) {
+            return defaults.getConfigurationSection(getCurrentPath());
         }
 
         return null;
@@ -733,10 +731,8 @@ public class MemorySection implements ConfigurationSection {
             for (Map.Entry<String, Object> entry : sec.map.entrySet()) {
                 output.put(createPath(section, entry.getKey(), this), entry.getValue());
 
-                if (entry.getValue() instanceof ConfigurationSection) {
-                    if (deep) {
-                        mapChildrenValues(output, (ConfigurationSection) entry.getValue(), deep);
-                    }
+                if (entry.getValue() instanceof ConfigurationSection && deep) {
+                    mapChildrenValues(output, (ConfigurationSection) entry.getValue(), deep);
                 }
             }
         } else {
