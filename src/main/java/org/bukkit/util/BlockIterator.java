@@ -180,15 +180,15 @@ public class BlockIterator implements Iterator<Block> {
     }
 
     private BlockFace getXFace(Vector direction) {
-        return ((direction.getX() > 0) ? BlockFace.EAST : BlockFace.WEST);
+        return (direction.getX() > 0) ? BlockFace.EAST : BlockFace.WEST;
     }
 
     private BlockFace getYFace(Vector direction) {
-        return ((direction.getY() > 0) ? BlockFace.UP : BlockFace.DOWN);
+        return (direction.getY() > 0) ? BlockFace.UP : BlockFace.DOWN;
     }
 
     private BlockFace getZFace(Vector direction) {
-        return ((direction.getZ() > 0) ? BlockFace.SOUTH : BlockFace.NORTH);
+        return (direction.getZ() > 0) ? BlockFace.SOUTH : BlockFace.NORTH;
     }
 
     private double getXLength(Vector direction) {

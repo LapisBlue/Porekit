@@ -3,7 +3,9 @@ package org.bukkit.util;
 import java.util.Collection;
 import org.apache.commons.lang.Validate;
 
-public class StringUtil {
+public final class StringUtil {
+
+    private StringUtil() {}
 
     /**
      * Copies all elements from the iterable collection of originals to the
