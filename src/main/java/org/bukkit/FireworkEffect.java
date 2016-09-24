@@ -43,6 +43,30 @@ public final class FireworkEffect implements ConfigurationSerializable {
         ;
     }
 
+    private static final String FLICKER = "flicker";
+    private static final String TRAIL = "trail";
+    private static final String COLORS = "colors";
+    private static final String FADE_COLORS = "fade-colors";
+    private static final String TYPE = "type";
+
+    private final boolean flicker;
+    private final boolean trail;
+    private final ImmutableList<Color> colors;
+    private final ImmutableList<Color> fadeColors;
+    private final Type type;
+    private String string = null;
+
+    FireworkEffect(boolean flicker, boolean trail, ImmutableList<Color> colors, ImmutableList<Color> fadeColors, Type type) {
+        if (colors.isEmpty()) {
+            throw new IllegalStateException("Cannot make FireworkEffect without any color");
+        }
+        this.flicker = flicker;
+        this.trail = trail;
+        this.colors = colors;
+        this.fadeColors = fadeColors;
+        this.type = type;
+    }
+
     /**
      * Construct a firework effect.
      *
@@ -278,30 +302,6 @@ public final class FireworkEffect implements ConfigurationSerializable {
                 type
             );
         }
-    }
-
-    private static final String FLICKER = "flicker";
-    private static final String TRAIL = "trail";
-    private static final String COLORS = "colors";
-    private static final String FADE_COLORS = "fade-colors";
-    private static final String TYPE = "type";
-
-    private final boolean flicker;
-    private final boolean trail;
-    private final ImmutableList<Color> colors;
-    private final ImmutableList<Color> fadeColors;
-    private final Type type;
-    private String string = null;
-
-    FireworkEffect(boolean flicker, boolean trail, ImmutableList<Color> colors, ImmutableList<Color> fadeColors, Type type) {
-        if (colors.isEmpty()) {
-            throw new IllegalStateException("Cannot make FireworkEffect without any color");
-        }
-        this.flicker = flicker;
-        this.trail = trail;
-        this.colors = colors;
-        this.fadeColors = fadeColors;
-        this.type = type;
     }
 
     /**
